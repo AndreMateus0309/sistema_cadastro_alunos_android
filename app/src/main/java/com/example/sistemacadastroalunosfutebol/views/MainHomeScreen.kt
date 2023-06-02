@@ -14,6 +14,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -31,6 +33,7 @@ fun MainHomeScreen(
     alunosViewModel: AlunosViewModel = viewModel()
 ) {
     val navController = rememberNavController()
+    val uiState by alunosViewModel.mainScreenUIState.collectAsState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -41,7 +44,7 @@ fun MainHomeScreen(
                     ),
                 title = {
                     Text(
-                        color = Color.White,
+                        color = Color.Black,
                         text = stringResource(
                             id = R.string.app_name
                         )
@@ -63,14 +66,21 @@ fun MainHomeScreen(
             }
         }
     ) {
-        NavHost(navController = navController, startDestination = "AlunosList") {
+        NavHost(
+            navController = navController,
+            startDestination = "AlunosList"
+        ) {
             composable("AlunosList") {
                 AlunosScreen(
-                    navController = navController, alunosViewModel = alunosViewModel
+                    navController = navController,
+                    alunosViewModel = alunosViewModel
                 )
             }
             composable("InserirEditarAluno") {
-                InserirEditarAlunoScreen(navController = navController, alunosViewModel = alunosViewModel)
+                InserirEditarAlunoScreen(
+                    navController = navController,
+                    alunosViewModel = alunosViewModel
+                )
             }
         }
     }

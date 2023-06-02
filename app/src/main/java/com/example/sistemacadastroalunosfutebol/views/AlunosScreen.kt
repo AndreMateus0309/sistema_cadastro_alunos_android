@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.sistemacadastroalunosfutebol.models.Aluno
 import com.example.sistemacadastroalunosfutebol.viewModels.AlunosViewModel
@@ -37,7 +38,11 @@ fun AlunosList(
 ) {
     LazyColumn() {
         items(alunos) {aluno ->
-            AlunosEntry(aluno = aluno, onCheckedChange = {})
+            AlunosEntry(
+                aluno = aluno,
+                onCheckedChange = {
+
+                })
         }
     }
 }
@@ -59,9 +64,18 @@ fun AlunosEntry(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = aluno.nome)
-            Text(text = "${aluno.imc}.")
-            Checkbox(checked = aluno.isSubscribed, onCheckedChange = onCheckedChange)
+            Text(
+                text = aluno.nome,
+                fontSize = 20.sp
+            )
+            Text(
+                text = "${aluno.imc}.",
+                fontSize = 20.sp
+            )
+            Checkbox(
+                checked = aluno.isSubscribed,
+                onCheckedChange = onCheckedChange
+            )
         }
     }
 }

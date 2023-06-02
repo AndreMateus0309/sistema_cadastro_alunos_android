@@ -82,12 +82,14 @@ fun InsertEditForm(
             onValueChange = onMassaChange
         )
         Row(
-
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
-                checked = isSubscribed, onCheckedChange = onSubscribedChange
+                checked = isSubscribed,
+                onCheckedChange = onSubscribedChange
             )
-
+            Text(text = "Aluno inscrito no campeonato")
         }
     }
 }
