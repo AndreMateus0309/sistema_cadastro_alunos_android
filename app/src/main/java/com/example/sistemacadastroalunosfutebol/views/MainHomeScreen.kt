@@ -60,15 +60,15 @@ fun MainHomeScreen(
             ) {
                 Icon(
                     painter = painterResource(
-                        id = R.drawable.baseline_add_24
-                    ), contentDescription = "Adicionar Aluno"
+                        id = uiState.fabIcon
+                    ), contentDescription = "FABIcon"
                 )
             }
         }
     ) {
         NavHost(
             navController = navController,
-            startDestination = "AlunosList"
+            startDestination = "InserirEditarAluno"
         ) {
             composable("AlunosList") {
                 AlunosScreen(

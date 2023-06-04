@@ -11,6 +11,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -24,25 +26,23 @@ fun AlunosScreen(
     navController: NavController,
     alunosViewModel: AlunosViewModel
 ) {
-    AlunosList(alunos = listOf(
-        Aluno(nome = "André Mateus", massa = 70.0, altura = 180, isSubscribed = false),
-        Aluno(nome = "João Lucas", massa = 48.0, altura = 175, isSubscribed = true),
-        Aluno(nome = "Bruno Otávio", massa = 40.0, altura = 150, isSubscribed = false),
-        Aluno(nome = "Pedro Vieira", massa = 45.0, altura = 145, isSubscribed = true)
-    ))
+    val uiState by alunosViewModel.alunosScreenUIState.collectAsState()
+
+    AlunosList(uiState.allstudents) { aluno, isSubscribed ->
+        alunosViewModel.onAlunoSubscribedChange(aluno, isSubscribed)
+    }
 }
 
 @Composable
 fun AlunosList(
-    alunos: List<Aluno>
+    alunos: List<Aluno>,
+    isSubscribed: (Aluno, Boolean) -> Unit
 ) {
     LazyColumn() {
         items(alunos) {aluno ->
-            AlunosEntry(
-                aluno = aluno,
-                onCheckedChange = {
-
-                })
+            AlunosEntry(aluno = aluno) { isSubscribed ->
+                isSubscribed(aluno, isSubscribed)
+            }
         }
     }
 }

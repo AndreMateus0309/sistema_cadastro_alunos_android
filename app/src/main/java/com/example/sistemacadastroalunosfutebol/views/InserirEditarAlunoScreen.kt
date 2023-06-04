@@ -13,10 +13,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sistemacadastroalunosfutebol.models.Aluno
 import com.example.sistemacadastroalunosfutebol.viewModels.AlunosViewModel
 
 @Composable
@@ -24,15 +27,26 @@ fun InserirEditarAlunoScreen(
     navController: NavController,
     alunosViewModel: AlunosViewModel
 ) {
+    val uiState by alunosViewModel.insertEditScreenUIState.collectAsState()
     InsertEditForm(
-        name = "",
-        altura = "",
-        massa = "",
-        isSubscribed = false,
-        onNameChange = {},
-        onSubscribedChange = {},
-        onAlturaChange = {},
-        onMassaChange = {}
+        name = uiState.nomeAluno,
+        altura = uiState.altura,
+        massa = uiState.massa,
+        onNameChange = {
+            alunosViewModel.onAlunoNameChange(
+                it
+            )
+        },
+        onAlturaChange = {
+            alunosViewModel.onAlunoAlturaChange(
+                it
+            )
+        },
+        onMassaChange = {
+            alunosViewModel.onAlunoMassaChange(
+                it
+            )
+        }
     )
 }
 
@@ -42,9 +56,7 @@ fun InsertEditForm(
     name: String,
     altura: String,
     massa: String,
-    isSubscribed: Boolean,
     onNameChange: (String) -> Unit,
-    onSubscribedChange: (Boolean) -> Unit,
     onAlturaChange: (String) -> Unit,
     onMassaChange: (String) -> Unit
 ) {
@@ -81,15 +93,6 @@ fun InsertEditForm(
             value = massa.toString(),
             onValueChange = onMassaChange
         )
-        Row(
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Checkbox(
-                checked = isSubscribed,
-                onCheckedChange = onSubscribedChange
-            )
-            Text(text = "Aluno inscrito no campeonato")
-        }
+
     }
 }
