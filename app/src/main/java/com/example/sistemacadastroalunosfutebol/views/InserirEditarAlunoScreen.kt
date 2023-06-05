@@ -83,14 +83,14 @@ fun InsertEditForm(
             label = {
                 Text(text = "Altura do Aluno")
             },
-            value = altura.toString(),
+            value = altura,
             onValueChange = onAlturaChange
         )
         OutlinedTextField(
             label = {
                 Text(text = "Massa do Aluno")
             },
-            value = massa.toString(),
+            value = massa,
             onValueChange = onMassaChange
         )
 

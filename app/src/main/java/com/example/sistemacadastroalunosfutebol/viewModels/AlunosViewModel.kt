@@ -43,8 +43,8 @@ class AlunosViewModel:ViewModel(
         }
         allAlunosTemp.removeAt(pos)
         allAlunosTemp.add(pos, updatedAluno.copy(isSubscribed = newAlunoSubscribed))
-        _insertEditScreenUIState.update { currentState ->
-            currentState.copy()
+        _alunosScreenUIState.update { currentState ->
+            currentState.copy(allstudents = allAlunosTemp)
         }
     }
 
