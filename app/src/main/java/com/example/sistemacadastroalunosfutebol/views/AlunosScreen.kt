@@ -1,5 +1,6 @@
 package com.example.sistemacadastroalunosfutebol.views
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,21 +29,34 @@ fun AlunosScreen(
 ) {
     val uiState by alunosViewModel.alunosScreenUIState.collectAsState()
 
-    AlunosList(uiState.allstudents) { aluno, isSubscribed ->
-        alunosViewModel.onAlunoSubscribedChange(aluno, isSubscribed)
-    }
+    AlunosList(
+        alunos = uiState.allstudents,
+        isSubscribed = {aluno, isSubscribed ->
+            alunosViewModel.onAlunoSubscribedChange(
+                aluno, isSubscribed
+            )
+        },
+        onEditAluno = {alunosViewModel.EditAluno(it, navController)})
 }
+
 
 @Composable
 fun AlunosList(
     alunos: List<Aluno>,
-    isSubscribed: (Aluno, Boolean) -> Unit
+    isSubscribed: (Aluno, Boolean) -> Unit,
+    onEditAluno: (Aluno) -> Unit
 ) {
     LazyColumn() {
         items(alunos) {aluno ->
-            AlunosEntry(aluno = aluno) { isSubscribed ->
-                isSubscribed(aluno, isSubscribed)
-            }
+            AlunosEntry(
+                aluno = aluno,
+                onCheckedChange = {
+                    isSubscribed(aluno, it)
+                },
+                onEditAluno = {
+                    onEditAluno(aluno)
+                }
+            )
         }
     }
 }
@@ -50,12 +64,16 @@ fun AlunosList(
 @Composable
 fun AlunosEntry(
     aluno: Aluno,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    onEditAluno: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .padding(4.dp)
+            .clickable {
+                onEditAluno()
+            },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Row(

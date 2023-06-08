@@ -55,7 +55,7 @@ fun MainHomeScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-
+                    alunosViewModel.navigate(navController)
                 }
             ) {
                 Icon(
@@ -68,7 +68,7 @@ fun MainHomeScreen(
     ) {
         NavHost(
             navController = navController,
-            startDestination = "InserirEditarAluno"
+            startDestination = "AlunosList"
         ) {
             composable("AlunosList") {
                 AlunosScreen(

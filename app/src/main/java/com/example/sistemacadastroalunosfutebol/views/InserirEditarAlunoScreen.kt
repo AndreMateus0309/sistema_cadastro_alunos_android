@@ -1,5 +1,6 @@
 package com.example.sistemacadastroalunosfutebol.views
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,9 @@ fun InserirEditarAlunoScreen(
     alunosViewModel: AlunosViewModel
 ) {
     val uiState by alunosViewModel.insertEditScreenUIState.collectAsState()
+    BackHandler {
+        alunosViewModel.onBackPressed(navController)
+    }
     InsertEditForm(
         name = uiState.nomeAluno,
         altura = uiState.altura,

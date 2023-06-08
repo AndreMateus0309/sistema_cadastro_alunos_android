@@ -118,7 +118,38 @@ class AlunosViewModel:ViewModel(
                     )
                 }
             }
-            navController.navigate("AlunosList")
+            _insertEditScreenUIState.update {
+                InsertEditScreenUIState()
+            }
+            editAluno = false
+            alunoToEdit = Aluno("", "", "", false)
+            navController.navigate("AlunosList") {
+                popUpTo("AlunosList") {
+                    inclusive = true
+                }
+            }
         }
+    }
+
+    fun EditAluno(aluno: Aluno, navController: NavController) {
+        editAluno = true
+        alunoToEdit = aluno
+        _insertEditScreenUIState.update { currentState ->
+            currentState.copy(
+                nomeAluno = aluno.nome,
+                isSubscribed = aluno.isSubscribed
+            )
+        }
+        navigate(navController)
+    }
+
+    fun onBackPressed(navController: NavController) {
+        _mainScreenUIState.update {curentState ->
+            curentState.copy(
+                screenName = "AlunosList",
+                fabIcon = R.drawable.baseline_add_24
+            )
+        }
+        navController.popBackStack()
     }
 }

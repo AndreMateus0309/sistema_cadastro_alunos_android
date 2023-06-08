@@ -4,6 +4,6 @@ import androidx.annotation.DrawableRes
 import com.example.sistemacadastroalunosfutebol.R
 
 data class MainScreenUIState(
-    val screenName: String = "Task List",
+    val screenName: String = "AlunosList",
     @DrawableRes val fabIcon: Int = R.drawable.baseline_add_24
 )
